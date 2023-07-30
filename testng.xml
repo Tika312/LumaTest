@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/user/Documents/LumaTest">
+        <classes>
+            <class name="luma.RegistrationTest">
+                <methods>
+                    <include name="demo1"/>
+                    <include name="demo2"/>
+                    <include name="demo3"/>
+                    <include name="demo4"/>
+                    <include name="demo5"/>
+                    <include name="demo6"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

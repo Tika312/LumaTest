@@ -5,60 +5,55 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import user_interface.model.LoginCredentials;
-import user_interface.pages.RegistrationPage;
-import user_interface.pages.RegistrationSuccessfulPage;
 
-import static user_interface.model.LoginCredentials.firstName;
-import static user_interface.model.LoginCredentials.lastName;
 
 
 @Epic("Registration page Test")
 public class RegistrationTest extends BaseTestbyTilek {
 
-    RegistrationPage registrationPage = new RegistrationPage();
-    RegistrationSuccessfulPage registrationSuccessfulPage = new RegistrationSuccessfulPage();
 
 
-    @Description("Opening the Registration page")
-    @BeforeClass
-    void openingBrowser(){
-        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
-    }
+
+
 
     @Description("Register with valid credentials")
     @Severity(SeverityLevel.CRITICAL)
     @Test
     void demo1(){
-        registrationPage.enterFirstName(firstName.getCredentials())
-                .enterLastName(lastName.getCredentials())
-                .enterEmail(LoginCredentials.email.getCredentials())
-                .enterPassword(LoginCredentials.password.getCredentials())
-                .confirmEnteredPassword(LoginCredentials.password.getCredentials())
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
+        String password = fakeDataProvider.generateFakePassword();
+        registrationPage.enterFirstName(fakeDataProvider.generateFakeFirstName())
+                .enterLastName(fakeDataProvider.generateFakeLastName())
+                .enterEmail(fakeDataProvider.generateFakeEmail())
+                .enterPassword(password)
+                .confirmEnteredPassword(password)
                 .clickSignUpButton();
-        String resultText = registrationSuccessfulPage.thankYouMessage.getText();
-        String expectedResult = "THANK YOU!";
-        Assert.assertEquals(resultText, expectedResult);
+        WebElement element = driver.findElement(By.xpath("//h1[text()='THANK YOU!']"));
+        elementActions.waitElementTobeDisplayed(element);
+        Assert.assertTrue(element.isDisplayed());
     }
     @Description("Register with invalid first name")
     @Severity(SeverityLevel.CRITICAL)
     @Test
-    void demo2() throws InterruptedException {
+    void demo2()  {
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
         String email = fakeDataProvider.generateFakeEmail();
         String firstName = fakeDataProvider.generateFakeMobileNumber();
         registrationPage.enterFirstName(firstName)
-                .enterLastName(lastName.getCredentials())
+                .enterLastName(LoginCredentials.lastName.getCredentials())
                 .enterEmail(email)
                 .enterPassword(LoginCredentials.password.getCredentials())
                 .confirmEnteredPassword(LoginCredentials.password.getCredentials())
                 .clickSignUpButton();
-        Thread.sleep(3000);
         System.out.println(email);
         System.out.println(firstName);
-        String resultText = registrationSuccessfulPage.thankYouMessage.getText();
+        String resultText = driver.findElement(By.xpath("//h1[text()='THANK YOU!']")).getText();
         String expectedResult = "Unsuccessful";
         Assert.assertEquals(resultText, expectedResult);
     }
@@ -66,7 +61,8 @@ public class RegistrationTest extends BaseTestbyTilek {
     @Description("Register with invalid first name and invalid last Name")
     @Severity(SeverityLevel.CRITICAL)
     @Test
-    void demo3() throws InterruptedException {
+    void demo3()  {
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
         String email = fakeDataProvider.generateFakeEmail();
         String firstName = fakeDataProvider.generateFakeMobileNumber();
         String lastName = fakeDataProvider.generateFakeMobileNumber();
@@ -79,7 +75,7 @@ public class RegistrationTest extends BaseTestbyTilek {
         System.out.println(email);
         System.out.println(firstName);
         System.out.println(lastName);
-        String resultText = registrationSuccessfulPage.thankYouMessage.getText();
+        String resultText = driver.findElement(By.xpath("//h1[text()='THANK YOU!']")).getText();
         String expectedResult = "Unsuccessful";
         Assert.assertEquals(resultText, expectedResult);
     }
@@ -88,6 +84,7 @@ public class RegistrationTest extends BaseTestbyTilek {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     void demo4(){
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
         String email = "12456780@mail.ri";
         String firstName = fakeDataProvider.generateFakeMobileNumber();
         String lastName = fakeDataProvider.generateFakeMobileNumber();
@@ -100,7 +97,7 @@ public class RegistrationTest extends BaseTestbyTilek {
         System.out.println(email);
         System.out.println(firstName);
         System.out.println(lastName);
-        String resultText = registrationSuccessfulPage.thankYouMessage.getText();
+        String resultText = driver.findElement(By.xpath("//h1[text()='THANK YOU!']")).getText();
         String expectedResult = "Unsuccessful";
         Assert.assertEquals(resultText, expectedResult);
     }
@@ -109,6 +106,7 @@ public class RegistrationTest extends BaseTestbyTilek {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     void demo5(){
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
         String email = "12456780@mail.ri";
         String firstName = fakeDataProvider.generateFakeMobileNumber();
         String lastName = fakeDataProvider.generateFakeMobileNumber();
@@ -124,8 +122,8 @@ public class RegistrationTest extends BaseTestbyTilek {
         System.out.println(email);
         System.out.println(firstName);
         System.out.println(lastName);
-        String resultText = registrationSuccessfulPage.thankYouMessage.getText();
         String expectedResult = "Unsuccessful";
+        String resultText = driver.findElement(By.xpath("//h1[text()='THANK YOU!']")).getText();
         Assert.assertEquals(resultText, expectedResult);
     }
 
@@ -133,6 +131,7 @@ public class RegistrationTest extends BaseTestbyTilek {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     void demo6(){
+        driver.get("https://luma.enablementadobe.com/content/luma/us/en/community/signup.html#");
         String email = "12456780@mail.ri";
         String firstName = fakeDataProvider.generateFakeMobileNumber();
         String lastName = fakeDataProvider.generateFakeMobileNumber();
@@ -148,8 +147,8 @@ public class RegistrationTest extends BaseTestbyTilek {
         System.out.println(email);
         System.out.println(firstName);
         System.out.println(lastName);
-        String resultText = registrationPage.passwordDidNotMatchMessage.getText();
-        String expectedResult = "Password fields do not match";
-        Assert.assertEquals(resultText, expectedResult);
+        WebElement element = driver.findElement(By.xpath("//div[text()='Password fields do not match']"));
+       elementActions.waitElementTobeDisplayed(element);
+        Assert.assertTrue(element.isDisplayed());
     }
 }
